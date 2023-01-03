@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using static Unity.VisualScripting.Member;
 
 
 [RequireComponent(typeof(Rigidbody))]
@@ -11,10 +12,12 @@ public class movement : MonoBehaviour
     Rigidbody rb;
     Animator anim;
 
-    //private bool is_jump;
+    private bool is_jumped = false;
     private bool is_run;
     private static float speed = 3f;
+    private static float jumpHeight = 2.2f;
     private float horizontalInput;
+    float jumpForce;
     //private float verticalInput;
 
     void Start()
@@ -25,6 +28,7 @@ public class movement : MonoBehaviour
 
         // kodun baþlangýcýnda koþmanýn aktif olmamasý için deðerini false olarak ayarlýyoruz
         is_run = false;
+        jumpForce = Mathf.Sqrt(jumpHeight * -2 * (Physics.gravity.y * rb.mass));
     }
 
     void FixedUpdate()
@@ -51,6 +55,22 @@ public class movement : MonoBehaviour
         {
             is_run = false;
             anim.SetBool("is_run", false);
+        }
+
+        // karakterin zýplamasý
+        if (Input.GetKey(KeyCode.Space) && is_jumped == false)
+        {
+            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            is_jumped = true;
+            anim.SetTrigger("is_jump");
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.transform.tag == "floor")
+        {
+            is_jumped = false;
         }
     }
 }
