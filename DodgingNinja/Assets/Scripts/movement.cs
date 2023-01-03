@@ -4,14 +4,15 @@ using UnityEngine;
 
 public class movement : MonoBehaviour
 {
-    // Start is called before the first frame update
+    Rigidbody rb;
+    Animator anim;
+
     void Start()
     {
         
-    }    
+    }
 
-    // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         
     }
