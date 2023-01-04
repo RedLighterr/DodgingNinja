@@ -4,15 +4,13 @@ using UnityEngine;
 
 public class balls : MonoBehaviour
 {
-    // Start is called before the first frame update
     void Start()
     {
-        
+        StartCoroutine(DestroyBall());
     }
-
-    // Update is called once per frame
-    void Update()
+    IEnumerator DestroyBall()
     {
-        
+        yield return new WaitForSeconds(10);
+        this.gameObject.SetActive(false);
     }
 }

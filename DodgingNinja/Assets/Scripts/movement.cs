@@ -48,7 +48,7 @@ public class movement : MonoBehaviour
             transform.rotation = Quaternion.LookRotation(new Vector3(horizontalInput, 0f, 0f));
 
             // karakterin animasyonu
-            // eðer koþmuyorsa koþmayý aktifleþtirip animasyonu aktif edioyruz
+            // eðer koþmuyorsa koþmayý aktifleþtirip animasyonu aktif ediyoruz
             if (!is_run)
             {
                 is_run = true;

@@ -5,6 +5,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public balls[] balls;
+    private int selectedBall = -1;
 
     void Start()
     {
@@ -25,4 +26,24 @@ public class GameManager : MonoBehaviour
             balls[ind].gameObject.SetActive(false);
         }
     }
+
+    public void SelectBall()
+    {
+        for (int i = 0; i < 1;)
+        {
+            int a = Random.Range(0, balls.Length);
+            if (a != selectedBall)
+            {
+                selectedBall = a;
+                i++;
+            }
+        }
+    }
+
+    IEnumerator CallBalls()
+    {
+        yield return new WaitForSeconds(0);
+    }
+
+
 }
