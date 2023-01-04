@@ -7,7 +7,7 @@ public class balls : MonoBehaviour
 {
     Rigidbody rb;
     int ballDirection;
-    public float ballSpeed = 10;
+    public float ballSpeed = 11;
 
     void Start()
     {
@@ -23,11 +23,16 @@ public class balls : MonoBehaviour
             ballDirection = -1;
         }
     }
-    IEnumerator DestroyBall()
+    public IEnumerator DestroyBall()
     {
-        yield return new WaitForSeconds(6);
-
-        transform.position = new Vector3(x: 26, y: -0.15f, z: -4.97f);
+        yield return new WaitForSeconds(4);
+        if (ballDirection == -1)
+        {
+            transform.position = new Vector3(x: 10, y: -0.15f, z: -4.97f);
+        }else if (ballDirection == 1)
+        {
+            transform.position = new Vector3(x: -10, y: -0.15f, z: -4.97f);
+        }
         gameObject.SetActive(false);
     }
 
@@ -35,5 +40,9 @@ public class balls : MonoBehaviour
     {
         float position_x = rb.position.x + ballDirection/ballSpeed;
         transform.position = new Vector3(position_x, rb.position.y, rb.position.z);
+        if (Mathf.Abs(transform.position.x) > 8)
+        {
+            StartCoroutine(DestroyBall());
+        }
     }
 }

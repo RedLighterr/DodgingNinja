@@ -15,7 +15,7 @@ public class GameManager : MonoBehaviour
             for (int ind = 0; ind < 1; ind++)
             {
                 // burasý eðer farklý toplar ya da engeller spawnlamak istersek diye yapýldý
-                Instantiate(balls[ind], new Vector3(x: 26, y: -0.15f, z: -4.97f), Quaternion.identity);
+                Instantiate(balls[ind], new Vector3(x: 10, y: -0.15f, z: -4.97f), Quaternion.identity);
             }
         }
         // engeller (balls) sahnede aranýp balls dizisine ekleniyor
@@ -25,24 +25,43 @@ public class GameManager : MonoBehaviour
         {
             balls[ind].gameObject.SetActive(false);
         }
+        // yarýsýný sol tarafa gönderiyoruz
+        for (int ind = 0; ind < 5; ind++)
+        {
+            balls[ind].transform.position = new Vector3(x: -10, y: -0.15f, z: -4.97f);
+        }
+        StartCoroutine(CallBalls());
     }
 
     public void SelectBall()
     {
-        for (int i = 0; i < 1;)
+        int sayi1 = Random.Range(1, 3);
+        print(sayi1);
+        int sayi2 = 5;
+
+        for (int i = 0; i < sayi1;)
         {
-            int a = Random.Range(0, balls.Length);
+            int a = Random.Range(0, balls.Length - sayi2);
             if (a != selectedBall)
             {
                 selectedBall = a;
+                if(sayi1 == 2)
+                {
+                    sayi2 = 0;
+                }
                 i++;
+                balls[selectedBall].gameObject.SetActive(true);
             }
         }
+        print(sayi2);
     }
 
     IEnumerator CallBalls()
     {
-        yield return new WaitForSeconds(0);
+        SelectBall();
+        float sayi = Random.Range(2.1f, 4.1f);
+        yield return new WaitForSeconds(sayi);
+        StartCoroutine(CallBalls());
     }
 
 
