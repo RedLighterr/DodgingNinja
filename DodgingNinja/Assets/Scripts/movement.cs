@@ -14,11 +14,15 @@ public class movement : MonoBehaviour
 
     private bool is_jumped = false;
     private bool is_run;
-    private static float speed = 3f;
+    //private static float speed = 10f;
     private static float jumpHeight = 2.2f;
     private float horizontalInput;
     float jumpForce;
     //private float verticalInput;
+
+    float posX = 0;
+    float min = -6.4f, max = 6.4f;
+
 
     void Start()
     {
@@ -33,15 +37,15 @@ public class movement : MonoBehaviour
 
     void FixedUpdate()
     {
-        // karakterin hareket kodlarý
+        // karakterin hareketi ve animasyonlarý
         horizontalInput = Input.GetAxis("Horizontal");
 
         // daha mutlak deðer alýp kontrol ediyoruz böylece eksi yada artý için ayrý if bloðu kullanmýyoruz
         if (Mathf.Abs(horizontalInput) > 0.01f)
         {
+            hareket();
             // karakterin hareketi
             transform.rotation = Quaternion.LookRotation(new Vector3(horizontalInput, 0f, 0f));
-            rb.MovePosition(rb.position - transform.forward * speed * Time.fixedDeltaTime * -1f);
 
             // karakterin animasyonu
             // eðer koþmuyorsa koþmayý aktifleþtirip animasyonu aktif edioyruz
@@ -65,6 +69,14 @@ public class movement : MonoBehaviour
             is_jumped = true;
             anim.SetTrigger("is_jump");
         }
+    }
+    void hareket()
+    {
+        posX += Input.GetAxis("Horizontal")/10;
+        //posZ += Input.GetAxis("Vertical");
+
+        posX = Mathf.Clamp(posX, min, max);
+        transform.position = new Vector3(posX, rb.position.y, rb.position.z);
     }
 
     // karakterin zýpladýktan sonra yere basana kadar tekrar zýplamasýný engellemek için yere temas ettiðinde zýplayabilmesini tekrar aktif ediyoruz
