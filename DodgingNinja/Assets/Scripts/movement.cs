@@ -36,7 +36,7 @@ public class movement : MonoBehaviour
         // karakterin hareket kodlarý
         horizontalInput = Input.GetAxis("Horizontal");
 
-        // daha mutlak bir deðer alýp kontrol ediyoruz
+        // daha mutlak deðer alýp kontrol ediyoruz böylece eksi yada artý için ayrý if bloðu kullanmýyoruz
         if (Mathf.Abs(horizontalInput) > 0.01f)
         {
             // karakterin hareketi
@@ -44,20 +44,21 @@ public class movement : MonoBehaviour
             rb.MovePosition(rb.position - transform.forward * speed * Time.fixedDeltaTime * -1f);
 
             // karakterin animasyonu
-
+            // eðer koþmuyorsa koþmayý aktifleþtirip animasyonu aktif edioyruz
             if (!is_run)
             {
                 is_run = true;
                 anim.SetBool("is_run", true);
             }
         }
+        // eðer hareket etmiyorsa koþmayý deaktif ediyoruz ve animasyonu kapatýyoruz
         else if (is_run)
         {
             is_run = false;
             anim.SetBool("is_run", false);
         }
 
-        // karakterin zýplamasý
+        // karakterin zýplamasý ve animasyonu
         if (Input.GetKey(KeyCode.Space) && is_jumped == false)
         {
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
@@ -66,6 +67,7 @@ public class movement : MonoBehaviour
         }
     }
 
+    // karakterin zýpladýktan sonra yere basana kadar tekrar zýplamasýný engellemek için yere temas ettiðinde zýplayabilmesini tekrar aktif ediyoruz
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.transform.tag == "floor")
