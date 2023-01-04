@@ -18,6 +18,8 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        countdownTo = 60.0f;
+        Time.timeScale = 1;
         // oyun baþladýðýnda engeller oluþturuluyor bu sayede oyun sýrasýnda sürekli bir þeyler spawnlanýp kasmalara sebep olmayacak
         for (int i = 0; i < 10; i++)
         {
@@ -48,6 +50,11 @@ public class GameManager : MonoBehaviour
         if (countdownTo > 0)
         {
             timerText.text = "Kalan Süre: " + countdownTo.ToString("0.##");
+        }
+        else if (countdownTo == 0 || countdownTo < 0)
+        {
+            timerText.text = "Kalan Süre: " + countdownTo.ToString("0.##");
+            YouWin();
         }
     }
 
@@ -86,14 +93,21 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void YouWin()
+    {
+        youWinPanel.SetActive(true);
+        Time.timeScale = 0;
+    }
+
     public void TekrarOynaButton()
     {
-        SceneManager.LoadScene(0);
         Time.timeScale = 1;
+        SceneManager.LoadScene(0);
+        health = 3;
     }
     public void CikisButton()
     {
-        quit
+        Application.Quit();
     }
 
     IEnumerator CallBalls()
