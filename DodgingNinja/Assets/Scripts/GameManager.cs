@@ -1,11 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
     public balls[] balls;
     private int selectedBall = -1;
+    public RawImage[] hearts;
+    public int health = 3;
+    public TextMeshProUGUI timerText;
+    float countdownTo = 60.0f;
+    public GameObject gameOverPanel;
+    public GameObject youWinPanel;
 
     void Start()
     {
@@ -32,11 +41,19 @@ public class GameManager : MonoBehaviour
         }
         StartCoroutine(CallBalls());
     }
+    private void Update()
+    {
+        countdownTo -= Time.deltaTime;
+
+        if (countdownTo > 0)
+        {
+            timerText.text = "Kalan Süre: " + countdownTo.ToString("0.##");
+        }
+    }
 
     public void SelectBall()
     {
         int sayi1 = Random.Range(1, 3);
-        print(sayi1);
         int sayi2 = 5;
 
         for (int i = 0; i < sayi1;)
@@ -53,7 +70,30 @@ public class GameManager : MonoBehaviour
                 balls[selectedBall].gameObject.SetActive(true);
             }
         }
-        print(sayi2);
+    }
+
+    public void Hit()
+    {
+        if (health > 0)
+        {
+            hearts[health-1].gameObject.SetActive(false);
+            health -= 1;
+        }
+        if (health == 0)
+        {
+            gameOverPanel.SetActive(true);
+            Time.timeScale = 0;
+        }
+    }
+
+    public void TekrarOynaButton()
+    {
+        SceneManager.LoadScene(0);
+        Time.timeScale = 1;
+    }
+    public void CikisButton()
+    {
+        quit
     }
 
     IEnumerator CallBalls()
@@ -63,6 +103,4 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(sayi);
         StartCoroutine(CallBalls());
     }
-
-
 }

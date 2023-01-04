@@ -19,6 +19,7 @@ public class movement : MonoBehaviour
     private float horizontalInput;
     float jumpForce;
     //private float verticalInput;
+    public GameManager gm;
 
     float posX = 0;
     float min = -6.4f, max = 6.4f;
@@ -29,6 +30,7 @@ public class movement : MonoBehaviour
         // rigidbody ve animatorün tanýmlanmasý
         rb = GetComponent<Rigidbody>();
         anim= GetComponent<Animator>();
+        gm = FindObjectOfType<GameManager>();
 
         // kodun baþlangýcýnda koþmanýn aktif olmamasý için deðerini false olarak ayarlýyoruz
         is_run = false;
@@ -84,6 +86,10 @@ public class movement : MonoBehaviour
         if (collision.transform.tag == "floor")
         {
             is_jumped = false;
+        }
+        if (collision.transform.tag == "enemy")
+        {
+            gm.Hit();
         }
     }
 }
