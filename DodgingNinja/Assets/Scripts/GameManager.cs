@@ -15,7 +15,7 @@ public class GameManager : MonoBehaviour
             for (int ind = 0; ind < 1; ind++)
             {
                 // burasý eðer farklý toplar ya da engeller spawnlamak istersek diye yapýldý
-                Instantiate(balls[ind], new Vector3(x: 26, y: -0.45f, z: -4.97f), Quaternion.identity);
+                Instantiate(balls[ind], new Vector3(x: 26, y: -0.15f, z: -4.97f), Quaternion.identity);
             }
         }
         // engeller (balls) sahnede aranýp balls dizisine ekleniyor

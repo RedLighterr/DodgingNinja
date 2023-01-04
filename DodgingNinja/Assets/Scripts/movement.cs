@@ -73,7 +73,6 @@ public class movement : MonoBehaviour
     void hareket()
     {
         posX += Input.GetAxis("Horizontal")/10;
-        //posZ += Input.GetAxis("Vertical");
 
         posX = Mathf.Clamp(posX, min, max);
         transform.position = new Vector3(posX, rb.position.y, rb.position.z);
